@@ -213,27 +213,27 @@
 	
 	
 	<div id="div-review" class="row" style="padding-top:10px" >
-	        <div class="col-md-6">
-			
-			<?php if( isset($notice['ReviewedAt'])) : ?>
-			     <h3><span class="label label-success">已審核 ( <?php echo date_format($notice['ReviewedAt'], 'Y-m-d H:i:s'); ?> )</span></h3>
-			<?php else : ?>
-			   <form id="form-approve" method="POST" action="approve.php">
-			     <button id="btn-review-ok" class="btn btn-success" type="button">
-				   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <div class="col-md-6">
+        
+        <?php if( isset($notice['ReviewedAt'])) : ?>
+            <h3><span class="label label-success">已審核 ( <?php echo date_format($notice['ReviewedAt'], 'Y-m-d H:i:s'); ?> )</span></h3>
+        <?php else : ?>
+            <form id="form-approve" method="POST" action="approve.php">
+                <button id="btn-review-ok" class="btn btn-success" type="button">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     核准
                 </button>
-				
-				<input name="Id" value="<?php echo $notice['Id']; ?>">
-			   </form>	
-			<?php endif ?>
-			
-			
             
-			   
+                <input type="hidden" name="Id" value="<?php echo $notice['Id']; ?>">
+            </form>	
+        <?php endif ?>
+        
+        
+        
+            
 
-               
-            </div>
+            
+        </div>
 	        
     </div>
 	
@@ -302,7 +302,7 @@
     </div>
 
 
-    <button id="btn-alert-modal" type="button" data-toggle="modal" data-target="#alert-modal" style="display:none" >ALERT</button>
+    <button id="btn-alert-modal" type="button" data-toggle="modal" data-target="#alert-modal" style="display:none" ></button>
     <div class="modal fade" id="alert-modal" role="dialog">
         <div class="modal-dialog"  role="document">
             <div class="modal-content">
@@ -450,12 +450,12 @@
              }
 
              if (document.getElementById('attachment-file').files.length) {
-                 var inputAttachmentTitle = $("input[name='Attachment_Title']");   
-                 if (!inputAttachmentTitle.val()) {
-                     canSubmit = false;
-                     inputAttachmentTitle.next().show();
-                     errMsgs.push(inputAttachmentTitle.next().text());
-                 }
+                //  var inputAttachmentTitle = $("input[name='Attachment_Title']");   
+                //  if (!inputAttachmentTitle.val()) {
+                //      canSubmit = false;
+                //      inputAttachmentTitle.next().show();
+                //      errMsgs.push(inputAttachmentTitle.next().text());
+                //  }
              }
 
              var student = isTrue($("input[type='checkbox'][name='Student']").val());

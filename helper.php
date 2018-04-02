@@ -3,7 +3,7 @@
     function redirectToIndex()
     {
 	    /* 回到列表index */
-		header("Location: http://localhost/tp-notice/index.php");
+		header("Location: http://localhost/tp-notices/index.php");
 		exit;
     }
 	function notFound()
@@ -20,4 +20,6 @@
 		  print json_encode(['error' => $msg]);
 		  exit;		
 	}
+
+	
 	

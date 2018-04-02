@@ -1,82 +1,82 @@
   
  
-   function getAppUrl(url){
-	   var appUrl='http://localhost/tp-notice/';
-	   return appUrl + url;
-   }
-   
-   function redirctPage(page){
-	    document.location = getAppUrl(page);
-   }
-   function deleteNotice(){
-	    var url = getAppUrl('delete.php');
-		var id=getNoticeId();
-		$.ajax({
-			type: "POST",
-			url: url,
-			data:{Id:id},
-			dataType: 'json',
-			success: function (data) {
-	          redirctPage('index.php');
-				
-			},
-			error: function (e) {
-				console.log(e);
-				OnError();
-			}
-		});
-	   
-   }
-   function delAttachment() {
-        var url = getAppUrl('delete.php');
-		var id=getAttachmentId();
-		
-		$.ajax({
-			type: "POST",
-			url: url,
-			data:{Attachment_Id:id},
-			dataType: 'json',
-			success: function (data) {
-	            setAttachmentId('0');
-				$("input[name='Attachment_Title']").val('');
+    function getAppUrl(url){
+        var appUrl='http://localhost/tp-notices/';  
+        return appUrl + url;
+    }
 
-				toggleFile();
-				
-			},
-			error: function (e) {
-				console.log(e);
-				OnError();
-			}
-		});
+    function redirctPage(page){
+            document.location = getAppUrl(page);
+    }
+    function deleteNotice(){
+            var url = getAppUrl('delete.php');
+            var id=getNoticeId();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:{Id:id},
+                dataType: 'json',
+                success: function (data) {
+                redirctPage('index.php');
+                    
+                },
+                error: function (e) {
+                    console.log(e);
+                    OnError();
+                }
+            });
+        
+    }
+    function delAttachment() {
+            var url = getAppUrl('delete.php');
+            var id=getAttachmentId();
+            
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:{Attachment_Id:id},
+                dataType: 'json',
+                success: function (data) {
+                    setAttachmentId('0');
+                    $("input[name='Attachment_Title']").val('');
 
-       
-   }
-   
-   function reviewOK(){
-	   $('#form-approve').submit();
-   }
-   
-   function getNoticeId(){
-	   
-	   return $('#notice-id').val();
-   }
-   
-   
-   function canEdit(){
-	   var val=$('#can-edit').val();
-	   return isTrue(val);
-   }
-   function canReview(){
-	   var val=$('#can-review').val();
-	   return isTrue(val);
-   }
-   function canDelete(){
-	   var val=$('#can-delete').val();
-	   return isTrue(val);
-   }
- 
-   function isTrue(val){
-	   if(!val) return false;
+                    toggleFile();
+                    
+                },
+                error: function (e) {
+                    console.log(e);
+                    OnError();
+                }
+            });
+
+        
+    }
+
+    function reviewOK(){
+        $('#form-approve').submit();
+    }
+
+    function getNoticeId(){
+        
+        return $('#notice-id').val();
+    }
+
+
+    function canEdit(){
+        var val=$('#can-edit').val();
+        return isTrue(val);
+    }
+    function canReview(){
+        var val=$('#can-review').val();
+        return isTrue(val);
+    }
+    function canDelete(){
+        var val=$('#can-delete').val();
+        return isTrue(val);
+    }
+
+    function isTrue(val){
+        if(!val) return false;
         if(typeof val=='number'){
             return val > 0
         }else if(typeof val=='string'){
@@ -86,11 +86,11 @@
         }else if(typeof val=='boolean'){
             return val
         }
-      
+    
         return false
     }
     function setSelectedUnits(unitCodes, unitNames) {
-       
+    
         var textCode = '';
         for (var i = 0; i < unitCodes.length; i++) {
             textCode += unitCodes[i];
@@ -98,8 +98,8 @@
         }
         $('#unit-codes').val(textCode);
 
-       
-       
+    
+    
         var textName = '';
         for (var i = 0; i < unitNames.length; i++) {
             textName += unitNames[i];
@@ -150,41 +150,39 @@
     function getSelectedClasses() {
         return $('#class-codes').val();
     }
-   
-    function fetchUnits() {
 
-        //var url = 'http://203.64.37.41:9000/api/units';
-        var url = 'http://school/api/units';
+    function fetchUnits() {
+        var url = 'http://203.64.35.83:8080/api/units';
         return new Promise((resolve, reject) => {
             $.getJSON(url)
-             .done(function (data) {
-                 createNodeList(data);
-                 resolve(true)
-             }).fail(function (error) {
-                 reject(error);
-             });
+            .done(function (data) {
+                createNodeList(data);
+                resolve(true)
+            }).fail(function (error) {
+                reject(error);
+            });
 
         })
     }
     function loadUnitNames() {
-        var url = 'http://school/api/units';
-		url += '?mode=1';
+        var url = 'http://203.64.35.83:8080/api/units';
+        url += '?mode=1';
         var codes = getSelectedUnits();
-		
+        
         if (!codes) return;
 
         var code_array = codes.split(',');		
-		
+        
         $.getJSON(url)
         .done(function (data) {
-			
+            
             var names = '';
             for (var i = 0; i < data.length; i++) {
                 if (code_array.includes(data[i].code)) {
-                 names +=  data[i].name + ',';
-               }
+                names +=  data[i].name + ',';
             }
-			
+            }
+            
             names = names.slice(0, -1);
 
             $('#unit-names').val(names);
@@ -194,38 +192,38 @@
         });
     }
     function fetchClasses() {
-        //var url = 'http://203.64.37.41:9000/api/classes';
-        var url = 'http://school/api/classes';
+        var url = 'http://203.64.35.83:8080/api/classes';
+        
         return new Promise((resolve, reject) => {
             $.getJSON(url)
-             .done(function (data) {
+            .done(function (data) {
                 createNodeList(data);
                 resolve(true)
-             }).fail(function (error) {
-                 reject(error);
-             });
+            }).fail(function (error) {
+                reject(error);
+            });
 
         })
     }
-	function loadClassNames() {
-        var url = 'http://school/api/classes';
-		
+    function loadClassNames() {
+        var url = 'http://203.64.35.83:8080/api/classes';
+        
         var codes = getSelectedClasses();
-		
+        
         if (!codes) return;
 
         var code_array = codes.split(',');		
-		
+        
         $.getJSON(url)
         .done(function (data) {
-			
+            
             var names = '';
             for (var i = 0; i < data.length; i++) {
                 if (code_array.includes(data[i].code)) {
-                 names +=  data[i].name + ',';
-               }
+                names +=  data[i].name + ',';
             }
-			
+            }
+            
             names = names.slice(0, -1);
 
             $('#class-names').val(names);
@@ -235,7 +233,7 @@
         });
     }
     function createNodeList(data) {
-      
+    
         var html = '';
 
         for (var i = 0; i < data.length ; i++) {
@@ -277,12 +275,12 @@
         if (type == 'unit') {
             selected_codes = getSelectedUnits();
         } else {
-           
+        
             selected_codes = getSelectedClasses();
         }
 
         
-      
+    
         treeview.hummingbird();
 
         if (!selected_codes) return;
@@ -327,7 +325,7 @@
         }
     }
     function onTeacherCheckChanged(checked) {
-       
+    
         if (checked) {
             var hideLevels = true;
             beginSelectUnits(hideLevels);
@@ -345,13 +343,13 @@
             $('#class-list').show();
             $('#err-roles').hide();
         } else {
-           
+        
             $('#class-list').hide();
         }
     } 
     function beginSelectUnits(hideLevels) {
         setSelectType('unit');
-      
+    
         var units = fetchUnits();
 
         units.then(result => {
@@ -376,7 +374,7 @@
 
         classes.then(result => {
             iniUnitsTree();
-          
+        
             $('#div-level').hide();
             ShowCustomModal('請選擇發送對象班級');
         })
@@ -393,7 +391,7 @@
         return $('#select-type').val();
     }
     function onSelectDone() {
-       
+    
         var type = getSelectType();
         var id_list = [];
         $("#treeview-members").hummingbird("getChecked", {
@@ -425,7 +423,7 @@
         } else {
             setSelectedClasses(id_list, name_list);
         }
-       
+    
 
     }
 
@@ -443,11 +441,11 @@
         $("input[name='Levels']").val(ids);
 
         setLevelsText();
-      
+    
 
     }
     function getLevels() {
-       return $("input[name='Levels']").val();
+    return $("input[name='Levels']").val();
     }
     function setLevelsText() {
         var levels = getLevels();
@@ -467,11 +465,11 @@
 
         $('#level-text').text(text);
 
-       
-      
+    
+    
     }
     
-   
+
     function CloseCustomModal() {
         $('#close-custom-modal').click();
     }
@@ -498,15 +496,15 @@
     function CloseAlert() {
         $('#close-alert').click();
     }
-   
+
 
     function OnError() {
         alert('系統發生錯誤, 請稍後再試');
     }
 
-   
+
     function clearErrorMsg(target) {
-       
+    
         if (target.name == 'Content') {
             var inputContent = $("textarea[name='Content']");
             inputContent.next().hide();
@@ -518,14 +516,14 @@
         var input = $("input[name='" + target.name + "']");
         
         input.next().hide();
-     
+    
     }
     function showErrors(msgs) {
         if (!msgs.length) return;
         var html = '<ul>';
         for (var i = 0; i < msgs.length; i++) {
             html += '<li>' + msgs[i] + '</li>';
-           
+        
         }
 
         html += '</ul>';
@@ -543,7 +541,7 @@
 
     function getAttachmentId() {
         return  $("input[name='Attachment_Id']").val();
-       
+    
     }
     function setAttachmentId(value) {
         $("input[name='Attachment_Id']").val(value);
@@ -556,22 +554,22 @@
         if (type == 'del-attachment') {
             delAttachment();
         }else if(type == 'delete-notice'){
-			 deleteNotice();
-			
-		}else if(type == 'review-ok'){
-			 reviewOK();
-			
-		}
+            deleteNotice();
+            
+        }else if(type == 'review-ok'){
+            reviewOK();
+            
+        }
     }
-	
-	
+    
+    
 
-   
+
 
     function toggleFile(){
-		
+        
         var attachmentId=getAttachmentId();
-		attachmentId=parseInt(attachmentId);
+        attachmentId=parseInt(attachmentId);
         if(attachmentId > 0){
             $('#attachment-file').hide();
             $('#div-exist-attachment').show();
@@ -603,23 +601,23 @@
         
     }
 
-   
+
     function iniEdit() {
-	
-		if(!canEdit()){
-			$("#form-notice :input").attr("disabled", true);
-			$('#submit-buttons').hide();
-		}
-		
-		if(!canDelete()){
-			$("#btn-delete").hide();
-		}
-		
-		if(!canReview()){
-			
-			$("#form-approve").hide();
-		}
-		
+    
+        if(!canEdit()){
+            $("#form-notice :input").attr("disabled", true);
+            $('#submit-buttons').hide();
+        }
+        
+        if(!canDelete()){
+            $("#btn-delete").hide();
+        }
+        
+        if(!canReview()){
+            
+            $("#form-approve").hide();
+        }
+        
         toggleFile();
 
         chkRoles();
@@ -638,8 +636,8 @@
         }
 
         loadUnitNames();
-		loadClassNames();
-		
-		
+        loadClassNames();
+        
+        
 
     }
